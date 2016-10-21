@@ -384,6 +384,7 @@ article img {
   padding: 0px 3px;
 }
 #animation-menu {
+  display: none;
   width: 72px;
   height: 36px;
   float: right;
@@ -712,6 +713,9 @@ blockquote {
     margin-left: 3px;
   }
   #show-menu {
+    display: inline-block;
+  }
+  #animation-menu {
     display: inline-block;
   }
   article img {

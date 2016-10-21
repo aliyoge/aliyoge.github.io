@@ -30,8 +30,12 @@ $(function(){
     if(!isMobile) return;
     if( $('#menu-list').is(":visible") )
       $("#menu-list").hide();
+      // $("menu-list")[0].style.display = 'none';
+      // $('#menu-list').css('display','none')
     else
       $("#menu-list").show();
+      // $("menu-list")[0].style.display = 'inline-block';
+      // $('menu-list').css('display','inline-block')
     return $("#animation-menu").toggleClass("cross");
   });
 
@@ -130,6 +134,11 @@ function TOCToggle() {
   isTOCShow = !isTOCShow;
 }
 
+//照片随机
+function randomSort(a, b) {
+    return Math.random() > 0.5 ? -1 : 1;
+}
+
 // set and change the background images.
 function playBackground() {
   // vegas config
@@ -143,6 +152,7 @@ function playBackground() {
       });
     });
   }
+  slides.sort(randomSort);
   // slides = [];
   //if(slides.length === 0) {
     var endWith = '';
