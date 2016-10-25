@@ -10,10 +10,12 @@ categories: Swift
 在声明弱引用对象是必须用`var`关键字, 不能用`let`.
 因为弱引用变量在没有被强引用的条件下会变为nil, 而let常量在运行的时候不能被改变.
 
-	class XDTest {
-		//会报错
-	    weak let tentacle = Tentacle() //let is a constant! All weak variables MUST be mutable.
-	}
+```swift
+class XDTest {
+	//会报错
+    weak let tentacle = Tentacle() //let is a constant! All weak variables MUST be mutable.
+}
+```
 	
 * `unowned`:相当于`__unsafe_unretained`, 不安全. 必须为`非可选类型`.
 
@@ -21,7 +23,7 @@ categories: Swift
 
 * `隐式解析可选类型` ：语法是在变量后面加上感叹号(例如`var name:String!`). 在初始的时候可以为nil, 但是第一次赋值以后便会一直有值. 使用该类型只需要正常调用, 不需要像可选类型那样解包.
 
-######避免在闭包中循环引用
+#### 避免在闭包中循环引用
 在闭包中, 要拿到对象本身的属性, 必须要用到self关键字. 
 导致block对对象进行了强引用, 而对象本身对block也是强引用, 这样就形成了循环引用. (`Self <-> Block`)
 1. 解决办法和OC中一样, 将强引用self变为弱引用self.
@@ -36,75 +38,79 @@ OC中解决办法是`__weak SelfClass *weakSelf = self;`
 官方文档中的例子:
 有参数和返回值的block
 
-    lazy var someClosure: (Int, String) -> String = {
-        [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
-        // closure body goes here
-    }
+```swift
+lazy var someClosure: (Int, String) -> String = {
+    [unowned self, weak delegate = self.delegate!] (index: Int, stringToProcess: String) -> String in
+    // closure body goes here
+}
+```
 
 无参数和返回值的block
 
-    lazy var someClosure: Void -> String = {
-        [unowned self, weak delegate = self.delegate!] in
-        // closure body goes here
-    }
+```swift
+lazy var someClosure: Void -> String = {
+    [unowned self, weak delegate = self.delegate!] in
+    // closure body goes here
+}
+```
 
 例子:
 
-	import UIKit
-	
-	class ViewController: UIViewController {
-	    var finishedCallBack: ( (dataString: String) -> () )?
-	    override func viewDidLoad() {
-	        super.viewDidLoad()
-	
-	        //解决方式三: [unowned self]  跟 _unsafe_unretained 类似  
-	        loadData { [unowned self] (dataString) -> () in
-	            print("\(dataString) \(self.view)")
-	        }  
-	    }
-	
-	    func method2() {
-	        //解决方式二:  在swift中 有特殊的写法  [weak self]
-	        loadData { [weak self] (dataString) -> () in
-	
-	            //以后在闭包中中 使用self 都是若引用的
-	            print("\(dataString) \(self?.view)")
-	        }
-	    }
-	
-	    func method1() {
-	        // 解决方式一: weak , OC中类似方法__weak
-	        weak var weakSelf = self
-	        loadData { (dataString) -> () in
-	            print("\(dataString) \(weakSelf?.view)")
-	        }
-	    }
-	
-	
-	    func loadData(finished: (dataString: String) -> ()) {
-	
-	        // 记录闭包
-	        self.finishedCallBack = finished
-	        //加载数据
-	        dispatch_async(dispatch_get_global_queue(0, 0)) { () -> Void in
-	
-	            print("执行耗时操作")
-	
-	            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-	                //执行回调
-	                self.working()
-	            })
-	        }
-	    }
-	
-	
-	    func working() {
-	        self.finishedCallBack?(dataString: "<html>")
-	    }
-	
-	    //swift dealloc
-	    //析构函数
-	    deinit {
-	        print("销毁")
-	    }
-	}
+```swift
+import UIKit
+
+class ViewController: UIViewController {
+    var finishedCallBack: ( (dataString: String) -> () )?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        //解决方式三: [unowned self]  跟 _unsafe_unretained 类似  
+        loadData { [unowned self] (dataString) -> () in
+            print("\(dataString) \(self.view)")
+        }  
+    }
+
+    func method2() {
+        //解决方式二:  在swift中 有特殊的写法  [weak self]
+        loadData { [weak self] (dataString) -> () in
+
+            //以后在闭包中中 使用self 都是若引用的
+            print("\(dataString) \(self?.view)")
+        }
+    }
+
+    func method1() {
+        // 解决方式一: weak , OC中类似方法__weak
+        weak var weakSelf = self
+        loadData { (dataString) -> () in
+            print("\(dataString) \(weakSelf?.view)")
+        }
+    }
+
+    func loadData(finished: (dataString: String) -> ()) {
+
+        // 记录闭包
+        self.finishedCallBack = finished
+        //加载数据
+        dispatch_async(dispatch_get_global_queue(0, 0)) { () -> Void in
+
+            print("执行耗时操作")
+
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                //执行回调
+                self.working()
+            })
+        }
+    }
+
+    func working() {
+        self.finishedCallBack?(dataString: "<html>")
+    }
+
+    //swift dealloc
+    //析构函数
+    deinit {
+        print("销毁")
+    }
+}
+```

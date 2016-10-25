@@ -11,11 +11,11 @@ $(function(){
   $("#btn-view").on('click', showHideToggle);
 
   // code highlight
-  hljs.configure({useBR: true});
+  // hljs.configure({useBR: true});
   hljs.initHighlightingOnLoad();
-  $(".highlight").each(function(i, block) {
-    hljs.highlightBlock(block);
-  });
+  // $(".highlight").each(function(i, block) {
+  //   hljs.highlightBlock(block);
+  // });
 
   $("#show-menu").on('click', function(){
     if(!isMobile) return;

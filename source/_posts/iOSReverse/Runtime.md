@@ -1,6 +1,5 @@
 ---
 title: Objective-C源码学习
-notebook: iOSReverse
 tags: [iOSReverse,Objective-C,IOS]
 categories: iOSReverse
 ---

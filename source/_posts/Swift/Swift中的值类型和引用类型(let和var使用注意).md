@@ -3,7 +3,7 @@ title: Swift中的值类型和引用类型(let和var使用注意)
 tags: [Swift,IOS]
 categories: Swift
 ---
-######Swift编程模式思考
+###### Swift编程模式思考
 `let`被用于声明不变量，`var`被用于声明变量。不变量的值一旦被定义就不能再改变，变量则可以在声明之后被随意赋值。
 
 和`Java(static,final)`,`C(static)`,`OC(const)`这种命令式编程语言中, 使用关键字说明一个变量不应被改变. 在这类语言中，不变量和变量相比，通常是不寻常的，次一等的概念。如果将一个名字关联到一个值，缺省的会得到一个变量，而不是不变量。如果，你需要一个不会改变，一直和某个特定值绑定的名字，就需要显式说明它是不变的。
@@ -16,7 +16,7 @@ categories: Swift
 
 `Swift`受到了函数式编程的影响，强化了不变量在语言中位置，鼓励不变量的使用。
 
-######值类型和引用类型
+###### 值类型和引用类型
 在`Java`中，可以认为原始类型`（int，long，float，double，short，char，boolean）`是值类型，而其它继承自`Object的`类型都是引用类型。
 
 而在`Swift`中，`结构体`被设计成一种值类型。`整数，浮点数，布尔值，字符串，数组和字典`在`Swift`中都是以`结构体`的形式实现的，所以，它们也都是值类型。类（`class`）仍然是引用类型。
@@ -24,35 +24,39 @@ categories: Swift
 **值类型**在被赋给一个变量，或被传给函数时，实际是做了一次**拷贝**。**引用类型**在被赋给一个变量，或被传给函数时，传递的是**引用**。
 
 例如:(引用类型)
-	
-	class Point {
-	  var x: Double
-	  var y: Double
-	
-	  init(x: Double, y: Double) {
-	    self.x = x
-	    self.y = y
-	  }
-	}
-	
-	var p1 = Point(x: 1, y: 2)
-	var p2 = Point(x: 1, y: 2)
-	var p3 = p1
-	p3.x = 2
+
+```swift
+class Point {
+  var x: Double
+  var y: Double
+
+  init(x: Double, y: Double) {
+    self.x = x
+    self.y = y
+  }
+}
+
+var p1 = Point(x: 1, y: 2)
+var p2 = Point(x: 1, y: 2)
+var p3 = p1
+p3.x = 2
+```
 	
 p1和p2是两个独立对象，p3是p1的别名。p1和p2对各自的修改互不影响, 而p1和p3可以认为是一个点。对其中任何一个的修改都会造成另一个也同样被修改。(**p1和p2指向两块不同的内存地址，p1和p3指向同一块内存地址。**)
 
 如果改为值类型:
 
-	struct Point {
-	  var x: Double
-	  var y: Double
-	}
-	
-	var p1 = Point(x: 1, y: 2)
-	var p2 = Point(x: 1, y: 2)
-	var p3 = p1
-	
+```swift
+struct Point {
+  var x: Double
+  var y: Double
+}
+
+var p1 = Point(x: 1, y: 2)
+var p2 = Point(x: 1, y: 2)
+var p3 = p1
+```
+
 p3不再是p1的别名，而是p1的一个拷贝。
 
 有一个问题：如果每次赋值都进行拷贝，会增大内存开销。Swift的解决方案是：只在值类型发生改变时才进行拷贝。

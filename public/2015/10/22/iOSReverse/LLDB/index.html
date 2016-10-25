@@ -1,0 +1,402 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="WenJunHuang">
+  
+  
+  
+  
+    <meta name="description" content="查看ASLR偏移(lldb) image list -o -f
+[  0] 0x00035000 /private/var/db/stash/_.29LMeZ/Applications/MobileNotes.app/MobileNotes(0x0000000000039000)
+[  1] 0x00197000 /Library/MobileSubstrate/MobileSubstrat...">
+  
+  <title>LLDB [ HuangXiaoDou's Blog ]</title>
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  <!-- 
+    <div class="item prev">
+      <a href="/2015/10/30/iOSReverse/iOS HOOK/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        iOS HOOK
+      </div>
+    </div>
+  
+  
+    <div class="item next">
+      <a href="/2015/10/12/iOSReverse/Logos语法/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Logos语法
+      </div>
+    </div>
+   -->
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="http://7xqztm.com1.z0.glb.clouddn.com/FullSizeRender.jpg"/>
+          <div id="homelink">HuangXiaoDou's Blog</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">首页</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">文章</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">标签</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">分类</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">关于</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="animation-menu">
+        <svg viewBox="0 0 800 600">
+          <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+          <path d="M300,320 L540,320" id="middle"></path>
+          <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+        </svg>
+      </div>
+      <!--<div id="show-menu">
+        <button>菜单</button>
+      </div> -->
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  <article id="post">
+    <h1>LLDB</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">撰写于 2015-10-22</span>
+      
+        <span id = "post-title-updated">修改于 2015-10-22</span>
+      
+      
+      <span id = "post-title-categories">分类
+      
+      
+        
+        
+        <a href="/categories/iOSReverse/">iOSReverse</a>
+      
+      </span>
+      
+      
+      <span id = "post-title-tags">
+      标签
+      
+      
+        
+        
+        <a href="/tags/iOSReverse/">iOSReverse</a>
+      
+        
+          /
+        
+        
+        <a href="/tags/IOS/">IOS</a>
+      
+      </span>
+      
+    </p>
+    
+    <h3 id="查看ASLR偏移"><a href="#查看ASLR偏移" class="headerlink" title="查看ASLR偏移"></a>查看ASLR偏移</h3><pre><code class="bash">(lldb) image list -o -f
+[  0] 0x00035000 /private/var/db/stash/_.29LMeZ/Applications/MobileNotes.app/MobileNotes(0x0000000000039000)
+[  1] 0x00197000 /Library/MobileSubstrate/MobileSubstrate.dylib (0x0000000000197000)
+[  2] 0x06db3000 /Users/snakeninny/Library/Developer/Xcode/iOS DeviceSupport/8.1 (12B411)/Symbols/System/Library/Frameworks/QuickLook.framework/QuickLook
+……
+</code></pre>
+<hr>
+<h3 id="设置断点"><a href="#设置断点" class="headerlink" title="设置断点"></a>设置断点</h3><p><code>b function</code></p>
+<p><code>br s –a address</code></p>
+<p><code>br s –a &#39;ASLROffset+address&#39;</code></p>
+<pre><code>(lldb) br s -a 0x4BE70
+Breakpoint 1: where = MobileNotes`___lldb_unnamed_function382$$MobileNotes, address = 0x0004be70
+</code></pre><p>当进程停下来之后，可以用“c”命令让进程继续运行。</p>
+<hr>
+<h3 id="断点处运行指令"><a href="#断点处运行指令" class="headerlink" title="断点处运行指令"></a>断点处运行指令</h3><p><code>(lldb) br com add 1</code></p>
+<p>执行这条命令后，LLDB会要求我们设置一系列指令，以“DONE”结束，如下:</p>
+<pre><code>Enter your debugger command(s).  Type &#39;DONE&#39; to end.
+&gt; po [$r0 class]
+&gt; p (char *)$r1
+&gt; c
+&gt; DONE
+</code></pre><hr>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看ASLR偏移"><span class="toc-text">查看ASLR偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置断点"><span class="toc-text">设置断点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#断点处运行指令"><span class="toc-text">断点处运行指令</span></a></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+    <a href="/2015/10/30/iOSReverse/iOS HOOK/" class="prev">&larr; 上一篇 iOS HOOK</a>
+  
+
+  
+
+  
+    <a href="/2015/10/12/iOSReverse/Logos语法/" class="next">下一篇 Logos语法 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      ©2016,Site by <a href="http://weibo.com/kongkongss">WenJunHuang</a> using Hexo
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="http://7xqztm.com1.z0.glb.clouddn.com/FullSizeRender.jpg">
+    <p id="description">技术分享，生活记录</p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/aliyoge">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/kongkongss">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/WenjunHuang">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.facebook.com/wenjun.huang.129">
+        
+          <i class="icon iconfont facebook">&#xe604;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/1.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/bgimg_1.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/2.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/1007.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/2Q==.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/631283.jpg?imageView2/1/w/__width__/h/__height__');
+    
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":false,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "E5E5E5";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+

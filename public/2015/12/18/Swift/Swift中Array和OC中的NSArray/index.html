@@ -1,0 +1,445 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="WenJunHuang">
+  
+  
+  
+  
+    <meta name="description" content="概念Array是Swift中的结构体类型(struct), 属于是值类型.NSArray是OC中的类型, 属于引用类型.
+var aarr = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
+var barr : NSMutableArray = [&quot;happy&quot;, &quot;every&quot;, &q...">
+  
+  <title>Swift中Array和OC中的NSArray [ HuangXiaoDou's Blog ]</title>
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  <!-- 
+    <div class="item prev">
+      <a href="/2015/12/20/Swift/Swift中的值类型和引用类型(let和var使用注意)/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Swift中的值类型和引用类型(let和var使用注意)
+      </div>
+    </div>
+  
+  
+    <div class="item next">
+      <a href="/2015/12/11/Swift/Swift中strong,weak,unowned关键字/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Swift中strong,weak,unowned关键字
+      </div>
+    </div>
+   -->
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="http://7xqztm.com1.z0.glb.clouddn.com/FullSizeRender.jpg"/>
+          <div id="homelink">HuangXiaoDou's Blog</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">首页</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">文章</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">标签</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">分类</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">关于</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="animation-menu">
+        <svg viewBox="0 0 800 600">
+          <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+          <path d="M300,320 L540,320" id="middle"></path>
+          <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+        </svg>
+      </div>
+      <!--<div id="show-menu">
+        <button>菜单</button>
+      </div> -->
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  <article id="post">
+    <h1>Swift中Array和OC中的NSArray</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">撰写于 2015-12-18</span>
+      
+        <span id = "post-title-updated">修改于 2016-10-25</span>
+      
+      
+      <span id = "post-title-categories">分类
+      
+      
+        
+        
+        <a href="/categories/Swift/">Swift</a>
+      
+      </span>
+      
+      
+      <span id = "post-title-tags">
+      标签
+      
+      
+        
+        
+        <a href="/tags/IOS/">IOS</a>
+      
+        
+          /
+        
+        
+        <a href="/tags/Swift/">Swift</a>
+      
+      </span>
+      
+    </p>
+    
+    <h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p><code>Array</code>是Swift中的结构体类型(<code>struct</code>), 属于是<code>值类型</code>.<br><code>NSArray</code>是OC中的类型, 属于<code>引用类型</code>.</p>
+<pre><code class="swift">var aarr = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
+var barr : NSMutableArray = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
+
+//1
+aarr[2] = &quot;minute&quot; //直接改变了aarr第二个元素的值
+barr[2] = &quot;minute&quot; //让barr第二个元素指向&quot;minute&quot;
+print(&quot;1---\(aarr)&quot;)
+print(&quot;1---\(barr)&quot;)
+/*输出:
+    1---[&quot;happy&quot;, &quot;every&quot;, &quot;minute&quot;]
+    1---(
+    happy,
+    every,
+    minute
+    )
+*/
+
+//2
+func changeA (var a:Array&lt;String&gt;) {
+    a[2] = &quot;second&quot; //a是对aarr的拷贝
+}
+func changeB (a : NSMutableArray) {
+    a[2] = &quot;second&quot; //a是对barr的引用
+}
+changeA(aarr) //值类型赋值时进行拷贝, 改变是a[2]的值, aarr并没有影响
+changeB(barr) //引用类型赋值时传递的是引用, a[2]和barr[2]都指向同一个地址.
+print(&quot;2---\(aarr)&quot;)
+print(&quot;2---\(barr)&quot;)
+/*输出:
+    2---[&quot;happy&quot;, &quot;every&quot;, &quot;minute&quot;]
+    2---(
+    happy,
+    every,
+    second
+    )
+*/
+</code></pre>
+<h6 id="Array和NSArray之间相互转换"><a href="#Array和NSArray之间相互转换" class="headerlink" title="Array和NSArray之间相互转换"></a>Array和NSArray之间相互转换</h6><p>Swift在数组方面Array很好的兼容了OC中的NSArray,可以直接进行赋值转换.</p>
+<p><em>(1) 可以直接声明Array或者NSArray, 并进行遍历</em></p>
+<pre><code class="swift">let swiftArray: Array&lt;String&gt; = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+for element in swiftArray{  
+    print(element)  
+} 
+
+let OCNSArray: NSArray = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+for element in OCNSArray{  
+   print(element)  
+}
+</code></pre>
+<p><em>(2)可以声明一个NSArray数组，转化为Array数组，再进行遍历</em></p>
+<pre><code class="swift">let OCNSArray: NSArray = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+let swiftArray:[String] = OCNSArray as! [String]  
+
+for index in swiftArray{  
+    print(index)  
+}
+</code></pre>
+<p><em>(3)可以声明一个Array数组，转化为NSArray，再进行遍历</em></p>
+<pre><code class="swift">let swiftArray: Array&lt;String&gt; = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+let OCNSArray:NSArray = swiftArray  
+for index in OCNSArray{  
+    print(index)  
+}
+</code></pre>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#概念"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Array和NSArray之间相互转换"><span class="toc-text">Array和NSArray之间相互转换</span></a></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+    <a href="/2015/12/20/Swift/Swift中的值类型和引用类型(let和var使用注意)/" class="prev">&larr; 上一篇 Swift中的值类型和引用类型(let和var使用注意)</a>
+  
+
+  
+
+  
+    <a href="/2015/12/11/Swift/Swift中strong,weak,unowned关键字/" class="next">下一篇 Swift中strong,weak,unowned关键字 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      ©2016,Site by <a href="http://weibo.com/kongkongss">WenJunHuang</a> using Hexo
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="http://7xqztm.com1.z0.glb.clouddn.com/FullSizeRender.jpg">
+    <p id="description">技术分享，生活记录</p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/aliyoge">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/kongkongss">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/WenjunHuang">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.facebook.com/wenjun.huang.129">
+        
+          <i class="icon iconfont facebook">&#xe604;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/1.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/bgimg_1.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/2.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/1007.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/2Q==.jpg?imageView2/1/w/__width__/h/__height__');
+    
+      backgroundImages.push('http://7xqztm.com1.z0.glb.clouddn.com/631283.jpg?imageView2/1/w/__width__/h/__height__');
+    
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":false,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "E5E5E5";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+

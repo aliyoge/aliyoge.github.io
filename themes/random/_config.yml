@@ -47,6 +47,7 @@ stylesheets:
 - /css/random.css
 - /css/vegas.min.css
 - /css/highlight-railscasts.css
+# - //cdn.bootcss.com/highlight.js/9.7.0/styles/atelier-cave-light.min.css
 - /css/jquery.fancybox.css
 - /css/iconfont/iconfont.css
 - /css/jquery.fancybox-thumbs.css
@@ -58,6 +59,7 @@ scripts:
 - /js/vegas.min.js
 - /js/random.js
 - /js/highlight.pack.js
+# - //cdn.bootcss.com/highlight.js/9.7.0/highlight.min.js
 - /js/jquery.mousewheel.pack.js
 - /js/jquery.fancybox.pack.js
 - /js/jquery.fancybox-thumbs.js

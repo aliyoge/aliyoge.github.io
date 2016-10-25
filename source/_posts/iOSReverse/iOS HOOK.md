@@ -18,7 +18,7 @@ categories: iOSReverse
 #### 1.1MSHookMessageEx函数 
 MSHookMessageEx函数的作用对象是Objective-C函数，其原理是调用Objective-C中高等级的运行时函数API:`class_getInstanceMethod`、`method_setImplementation`、`method_exchangeImplementations`等来替换原函数的逻辑，比如`method_exchangeImplementations`函数在Objective-C官方文档中描述的作用便是交换两个函数的实现，其内部的调用逻辑类似于：
 
-```Objective-C
+```objectivec
 IMP imp1 = method_getImplementation(m1);
 IMP imp2 = method_getImplementation(m2);
 method_setImplementation(m1, imp2);
@@ -29,13 +29,13 @@ method_setImplementation(m2, imp1);
 
 **MSHookMessageEx函数的使用方法，在CydiaSubstrate官网中该函数的描述如下：**
 
-```Objective-C
+```objectivec
 void MSHookMessageEx(Class _class, SEL message, IMP hook, IMP *old);
 ```
 
 >其中第一个参数_class为要Hook的Objective-C函数的类名；第二个参数message为要Hook的Objective-C函数的message；第三个参数hook为hook后新的对应该message的执行逻辑，即替换后的函数地址；第四个参数old为对应该message的原函数的地址，若无需调用原函数则该参数可以设为NULL。其官方的使用方法如下：
 
-```Objective-C
+```objectivec
 NSString *(*oldDescription)(id self, SEL _cmd);
 
 // implicit self and _cmd are explicit with IMP ABI
@@ -62,7 +62,7 @@ MSHookMessageEx(
 
 **MSHookFunction的使用方法，在CydiaSubstrate官网中函数的描述如下：**
 
-```Objective-C
+```objectivec
 void MSHookFunction(void *symbol, void *hook, void **old);
 ```
 

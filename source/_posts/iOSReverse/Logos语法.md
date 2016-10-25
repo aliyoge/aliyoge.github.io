@@ -7,7 +7,7 @@ categories: iOSReverse
 
 >指定需要hook的class,必须以％end结尾。
 
-```Objective-C
+```objectivec
 // hook SpringBoard类里面的_menuButtonDown函数,先打印一句话,再之子那个函数原始的操作
 %hook SpringBorad
 - (void)_menuButtonDown:(id)down
@@ -23,7 +23,7 @@ categories: iOSReverse
 
 >该指令在%hook内部使用，将函数的类名、参数等信息写入syslog,可以％log([(),…..])的格式追加其他打印信息。
 
-```Objective-C
+```objectivec
 %hook SpringBorad
 - (void)_menuButtonDown:(id)down
 {
@@ -38,7 +38,7 @@ categories: iOSReverse
 
 >该指令在%hook内部使用，执行被hook的函数的原始代码；也可以用％orig更改原始函数的参数。
 
-```Objective-C
+```objectivec
 %hook SpringBorad
 - (void)setCustomSubtitleText:(id)arg1 withColor:   (id)arg2
 {
@@ -53,7 +53,7 @@ categories: iOSReverse
 >该指令用于将%hook分组，便于代码管理及按条件初始化分组，必须以%end结尾。 
 一个％group可以包含多个%hook,所有不属于某个自定义group的％hook会被隐式归类到％group_ungrouped中。
 
-```Objective-C
+```objectivec
 /*
 在%group iOS7Hook中钩住iOS7Class的iOS7Method,在%group iOS8Class中钩住iOS8Method函数,然后在%group _ungroup中钩住SpringBoard类的powerDown函数.
 */
@@ -94,7 +94,7 @@ categories: iOSReverse
 注： 
 切记，只有调用了％init,对应的%group才能起作用！
 
-```Objective-C
+```objectivec
 #ifndef KCFCoreFoundationVersionNumber_iOS_8_0
 #define KCFCoreFoundationVersionNumber_iOS_8_0      1140.10
 #endif
@@ -118,7 +118,7 @@ categories: iOSReverse
 
 >tweak的constructor,完成初始化工作；如果不显示定义，Theos会自动生成一个%ctor,并在其中调用%init(_ungrouped)。%ctor一般可以用来初始化%group,以及进行MSHookFunction等操作,如下:
 
-```Objective-C
+```objectivec
 #ifndef KCFCoreFoundationVersionNumber_iOS_8_0
 #define KCFCoreFoundationVersionNumber_iOS_8_0      1140.10
 #endif
@@ -144,7 +144,7 @@ categories: iOSReverse
 Objective-C的category与class_addMethod的区别： 
 前者是静态的而后者是动态的。使用%new添加,而不需要向.h文件中添加函数声明,如果使用category,可能与遇到这样那样的错误.
 
-```Objective-C 
+```objectivec 
 %hook SpringBoard
 %new
 - (void)addNewMethod
@@ -164,7 +164,7 @@ Objective-C的category与class_addMethod的区别：
 
 >Add a property to a %subclass just like you would with @property to a normal Objective-C subclass as well as adding new properties to existing classes within %hook.
 
-```Objective-C 
+```objectivec 
 %property (nonatomic|assign|retain|copy|weak|strong|getter|setter) Type name;
 ```
 
@@ -175,7 +175,7 @@ Objective-C的category与class_addMethod的区别：
 >
 >Can be inside a %group block.
 
-```Objective-C 
+```objectivec 
 %subclass MyObject : NSObject
 
 - (id)init {

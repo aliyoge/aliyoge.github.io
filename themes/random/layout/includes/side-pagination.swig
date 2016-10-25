@@ -1,5 +1,5 @@
 <div class="side-navigate hide-area">
-  {% if page.prev.path %}
+  <!-- {% if page.prev.path %}
     <div class="item prev">
       <a href="{{url_for(page.prev.path)}}">
         <div class="item-icon"></div>
@@ -18,5 +18,5 @@
         {{page.next.title}}
       </div>
     </div>
-  {% endif %}
+  {% endif %} -->
 </div>

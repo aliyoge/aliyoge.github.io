@@ -5,7 +5,7 @@ categories: iOSReverse
 ---
 ### recursiveDescription － 打印UIView对象
 
-```Objective-C
+```objectivec
 cy# [[UIApp keyWindow] recursiveDescription].toString()
 `<iConsoleWindow: 0x156b6410; baseClass = UIWindow; frame = (0 0; 320 480); autoresize = W+H; gestureRecognizers = <NSArray: 0x156b6bc0>; layer = <UIWindowLayer: 0x156b6720>>
    | <UILayoutContainerView: 0x16258d80; frame = (0 0; 320 480); autoresize = W+H; layer = <CALayer: 0x16258e00>>
@@ -24,13 +24,13 @@ cy# [[UIApp keyWindow] recursiveDescription].toString()
 
 ### _printHierarchy － 直接打印所有UIViewController
 
-```Objective-C
+```objectivec
 [[[UIWindow keyWindow] rootViewController] _printHierarchy].toString()
 ```
 
 ### _autolayoutTrace - recursiveDescription的简化版，去掉了UIView的一些描述
  
-```Objective-C
+```objectivec
 cy# [[UIApp keyWindow] _autolayoutTrace].toString()
 *<iConsoleWindow:0x156b6410>
 |   *<UILayoutContainerView:0x16258d80>
@@ -49,7 +49,7 @@ cy# [[UIApp keyWindow] _autolayoutTrace].toString()
 
 ### _ivarDescription - 打印某个对象所有instance的名字和值
 
-```Objective-C
+```objectivec
 cy# [choose(SBApplication)[0] _ivarDescription].toString()
 `<SBApplication: 0x1766cab0>:
 in SBApplication:
@@ -66,7 +66,7 @@ in NSObject:
 
 ### _methodDescription - 打印某个对象的属性，实例和类方法
 
-```Objective-C
+```objectivec
 cy# [choose(SBApplicationController)[0] _methodDescription].toString()
 `<SBApplicationController: 0x17642990>:
 in SBApplicationController:
@@ -95,13 +95,13 @@ in NSObject:
 
 ### 找到目标App的Documents目录路径
 
-```Objective-C
+```objectivec
 cycript -p TargetApp
 cy# [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0] 
 ```
 
 ### 获取bundle info 
 
-```Objective-c
+```objectivec
 [[NSBundle mainBundle] infoDictionary].toString()
 ```
