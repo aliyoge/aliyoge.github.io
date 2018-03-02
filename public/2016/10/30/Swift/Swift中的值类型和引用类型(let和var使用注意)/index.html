@@ -1,7 +1,5 @@
 
 
-  
-
 
 
 
@@ -18,9 +16,10 @@
   
   
   
-    <meta name="description" content="技术分享，生活记录">
+    <meta name="description" content="Swift编程模式思考let被用于声明不变量，var被用于声明变量。不变量的值一旦被定义就不能再改变，变量则可以在声明之后被随意赋值。
+和Java(static,final),C(static),OC(const)这种命令式编程语言中, 使用关键字说明一个变量不应被改变. 在这类语言中，不变量和变量相比，通常是不寻常的，次一等的概念。如果将一个名字关联到一个值，缺省的会得到一个变量，而不是不...">
   
-  <title>归档 [ HuangXiaoDou's Blog ]</title>
+  <title>Swift中的值类型和引用类型(let和var使用注意) [ HuangXiaoDou's Blog ]</title>
   
   
     <link rel="shortcut icon" href="/favicon.ico">
@@ -39,6 +38,24 @@
 <body>
 <div class="side-navigate hide-area">
   <!-- 
+    <div class="item prev">
+      <a href="/2016/10/30/Swift/Swift中Array和OC中的NSArray/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Swift中Array和OC中的NSArray
+      </div>
+    </div>
+  
+  
+    <div class="item next">
+      <a href="/2016/10/30/Swift/Swift中strong,weak,unowned关键字/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Swift中strong,weak,unowned关键字
+      </div>
+    </div>
    -->
 </div>
 <div id="outer-container" class="hide-area">
@@ -64,7 +81,7 @@
           </li>
         
           
-            <li class="active">
+            <li>
           
             <a href="/archives">文章</a>
             
@@ -110,458 +127,108 @@
     <div id="content-inner">
       
       
-  <article>
-    
-
-  <div id="recent-posts">
-    <h1>归档
-    
-      <span class="posts-count">
-      共
-      8
+  <article id="post">
+    <h1>Swift中的值类型和引用类型(let和var使用注意)</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">撰写于 2016-10-30</span>
       
-        文章
+        <span id = "post-title-updated">修改于 2016-10-30</span>
+      
+      
+      <span id = "post-title-categories">分类
+      
+      
+        
+        
+        <a href="/categories/Swift/">Swift</a>
       
       </span>
-    
-    </h1>
-    
-    
+      
+      
+      <span id = "post-title-tags">
+      标签
       
       
         
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-    
-    
-      
+        
+        <a href="/tags/IOS/">IOS</a>
       
         
-        <h3 class="archive-year-title">2016
+          /
         
-          <span class="posts-count">
-          共
-          8
-          
-            文章
-          
-          </span>
         
-        </h3>
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/Logos语法/">
-  
-    Logos语法
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/cycript调试/">
-  
-    cycript调试
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/Runtime/">
-  
-    Objective-C源码学习
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Objective-C/">Objective-C</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中Array和OC中的NSArray/">
-  
-    Swift中Array和OC中的NSArray
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中的值类型和引用类型(let和var使用注意)/">
-  
-    Swift中的值类型和引用类型(let和var使用注意)
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中strong,weak,unowned关键字/">
-  
-    Swift中strong,weak,unowned关键字
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/iOS HOOK/">
-  
-    iOS HOOK
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/24/iOSReverse/LLDB/">
-  
-    LLDB
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-24</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-  </div>
+        <a href="/tags/Swift/">Swift</a>
+      
+      </span>
+      
+    </p>
+    
+    <h6 id="Swift编程模式思考"><a href="#Swift编程模式思考" class="headerlink" title="Swift编程模式思考"></a>Swift编程模式思考</h6><p><code>let</code>被用于声明不变量，<code>var</code>被用于声明变量。不变量的值一旦被定义就不能再改变，变量则可以在声明之后被随意赋值。</p>
+<p>和<code>Java(static,final)</code>,<code>C(static)</code>,<code>OC(const)</code>这种命令式编程语言中, 使用关键字说明一个变量不应被改变. 在这类语言中，不变量和变量相比，通常是不寻常的，次一等的概念。如果将一个名字关联到一个值，缺省的会得到一个变量，而不是不变量。如果，你需要一个不会改变，一直和某个特定值绑定的名字，就需要显式说明它是不变的。</p>
+<p>变量来源于<a href="https://zh.wikipedia.org/wiki/指令式編程" target="_blank" rel="external">命令式编程范式</a>, 不变量来源于<a href="https://zh.wikipedia.org/wiki/函數程式語言" target="_blank" rel="external">函数式编程范式</a>。</p>
+<p>函数式编程以数学函数为建模基础。其变量的概念和数学中变量的概念是一致的。</p>
+<p>在数学函数中，某个符号我们之所以称其为变量，是因为它可以用于代表不同的值。需要指明的是：当我们用明确的数值代入函数运算时，变量就拥有了明确的值。数学函数中不存在这种情况：某一次代换过程中，某个变量x一开始被代换为2，然后又变为3。这在数学上，没有任何意义。</p>
+<p><code>Swift</code>受到了函数式编程的影响，强化了不变量在语言中位置，鼓励不变量的使用。</p>
+<h6 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h6><p>在<code>Java</code>中，可以认为原始类型<code>（int，long，float，double，short，char，boolean）</code>是值类型，而其它继承自<code>Object的</code>类型都是引用类型。</p>
+<p>而在<code>Swift</code>中，<code>结构体</code>被设计成一种值类型。<code>整数，浮点数，布尔值，字符串，数组和字典</code>在<code>Swift</code>中都是以<code>结构体</code>的形式实现的，所以，它们也都是值类型。类（<code>class</code>）仍然是引用类型。</p>
+<p><strong>值类型</strong>在被赋给一个变量，或被传给函数时，实际是做了一次<strong>拷贝</strong>。<strong>引用类型</strong>在被赋给一个变量，或被传给函数时，传递的是<strong>引用</strong>。</p>
+<p>例如:(引用类型)</p>
+<pre><code class="swift">class Point {
+  var x: Double
+  var y: Double
 
+  init(x: Double, y: Double) {
+    self.x = x
+    self.y = y
+  }
+}
+
+var p1 = Point(x: 1, y: 2)
+var p2 = Point(x: 1, y: 2)
+var p3 = p1
+p3.x = 2
+</code></pre>
+<p>p1和p2是两个独立对象，p3是p1的别名。p1和p2对各自的修改互不影响, 而p1和p3可以认为是一个点。对其中任何一个的修改都会造成另一个也同样被修改。(<strong>p1和p2指向两块不同的内存地址，p1和p3指向同一块内存地址。</strong>)</p>
+<p>如果改为值类型:</p>
+<pre><code class="swift">struct Point {
+  var x: Double
+  var y: Double
+}
+
+var p1 = Point(x: 1, y: 2)
+var p2 = Point(x: 1, y: 2)
+var p3 = p1
+</code></pre>
+<p>p3不再是p1的别名，而是p1的一个拷贝。</p>
+<p>有一个问题：如果每次赋值都进行拷贝，会增大内存开销。Swift的解决方案是：只在值类型发生改变时才进行拷贝。</p>
 
   </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#Swift编程模式思考"><span class="toc-text">Swift编程模式思考</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#值类型和引用类型"><span class="toc-text">值类型和引用类型</span></a></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+    <a href="/2016/10/30/Swift/Swift中Array和OC中的NSArray/" class="prev">&larr; 上一篇 Swift中Array和OC中的NSArray</a>
+  
+
+  
+
+  
+    <a href="/2016/10/30/Swift/Swift中strong,weak,unowned关键字/" class="next">下一篇 Swift中strong,weak,unowned关键字 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
 
       
       
@@ -702,6 +369,8 @@ var unsplashConfig = {"gravity":"north"};
 var turnoffBackgroundImage = false;
 
 
+
+  turnoffBackgroundImage = true;
 
 
 var backgroundColor = "E5E5E5";

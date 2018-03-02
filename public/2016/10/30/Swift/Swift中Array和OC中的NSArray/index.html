@@ -1,7 +1,5 @@
 
 
-  
-
 
 
 
@@ -18,9 +16,11 @@
   
   
   
-    <meta name="description" content="技术分享，生活记录">
+    <meta name="description" content="概念Array是Swift中的结构体类型(struct), 属于是值类型.NSArray是OC中的类型, 属于引用类型.
+var aarr = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
+var barr : NSMutableArray = [&quot;happy&quot;, &quot;every&quot;, &q...">
   
-  <title>归档 [ HuangXiaoDou's Blog ]</title>
+  <title>Swift中Array和OC中的NSArray [ HuangXiaoDou's Blog ]</title>
   
   
     <link rel="shortcut icon" href="/favicon.ico">
@@ -39,6 +39,24 @@
 <body>
 <div class="side-navigate hide-area">
   <!-- 
+    <div class="item prev">
+      <a href="/2016/10/30/iOSReverse/Runtime/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Objective-C源码学习
+      </div>
+    </div>
+  
+  
+    <div class="item next">
+      <a href="/2016/10/30/Swift/Swift中的值类型和引用类型(let和var使用注意)/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Swift中的值类型和引用类型(let和var使用注意)
+      </div>
+    </div>
    -->
 </div>
 <div id="outer-container" class="hide-area">
@@ -64,7 +82,7 @@
           </li>
         
           
-            <li class="active">
+            <li>
           
             <a href="/archives">文章</a>
             
@@ -110,458 +128,135 @@
     <div id="content-inner">
       
       
-  <article>
-    
-
-  <div id="recent-posts">
-    <h1>归档
-    
-      <span class="posts-count">
-      共
-      8
+  <article id="post">
+    <h1>Swift中Array和OC中的NSArray</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">撰写于 2016-10-30</span>
       
-        文章
+        <span id = "post-title-updated">修改于 2016-10-30</span>
+      
+      
+      <span id = "post-title-categories">分类
+      
+      
+        
+        
+        <a href="/categories/Swift/">Swift</a>
       
       </span>
-    
-    </h1>
-    
-    
+      
+      
+      <span id = "post-title-tags">
+      标签
       
       
         
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-      
-      
-      
-    
-    
-    
-      
+        
+        <a href="/tags/IOS/">IOS</a>
       
         
-        <h3 class="archive-year-title">2016
+          /
         
-          <span class="posts-count">
-          共
-          8
-          
-            文章
-          
-          </span>
         
-        </h3>
+        <a href="/tags/Swift/">Swift</a>
       
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/Logos语法/">
-  
-    Logos语法
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/cycript调试/">
-  
-    cycript调试
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/Runtime/">
-  
-    Objective-C源码学习
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Objective-C/">Objective-C</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中Array和OC中的NSArray/">
-  
-    Swift中Array和OC中的NSArray
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中的值类型和引用类型(let和var使用注意)/">
-  
-    Swift中的值类型和引用类型(let和var使用注意)
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/Swift/Swift中strong,weak,unowned关键字/">
-  
-    Swift中strong,weak,unowned关键字
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/Swift/">Swift</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/Swift/">Swift</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/30/iOSReverse/iOS HOOK/">
-  
-    iOS HOOK
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-30</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
-      
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-    
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2016/10/24/iOSReverse/LLDB/">
-  
-    LLDB
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">10-24</span>
-    
-    <span id = "post-title-categories">分类
-    
-    
-      
-      
-      <a href="/categories/iOSReverse/">iOSReverse</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    标签
-    
-    
-      
-      
-      <a href="/tags/iOSReverse/">iOSReverse</a>
-    
-      
-        /
+      </span>
       
-      
-      <a href="/tags/IOS/">IOS</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
+    </p>
     
-  </div>
+    <h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p><code>Array</code>是Swift中的结构体类型(<code>struct</code>), 属于是<code>值类型</code>.<br><code>NSArray</code>是OC中的类型, 属于<code>引用类型</code>.</p>
+<pre><code class="swift">var aarr = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
+var barr : NSMutableArray = [&quot;happy&quot;, &quot;every&quot;, &quot;day&quot;]
 
+//1
+aarr[2] = &quot;minute&quot; //直接改变了aarr第二个元素的值
+barr[2] = &quot;minute&quot; //让barr第二个元素指向&quot;minute&quot;
+print(&quot;1---\(aarr)&quot;)
+print(&quot;1---\(barr)&quot;)
+/*输出:
+    1---[&quot;happy&quot;, &quot;every&quot;, &quot;minute&quot;]
+    1---(
+    happy,
+    every,
+    minute
+    )
+*/
+
+//2
+func changeA (var a:Array&lt;String&gt;) {
+    a[2] = &quot;second&quot; //a是对aarr的拷贝
+}
+func changeB (a : NSMutableArray) {
+    a[2] = &quot;second&quot; //a是对barr的引用
+}
+changeA(aarr) //值类型赋值时进行拷贝, 改变是a[2]的值, aarr并没有影响
+changeB(barr) //引用类型赋值时传递的是引用, a[2]和barr[2]都指向同一个地址.
+print(&quot;2---\(aarr)&quot;)
+print(&quot;2---\(barr)&quot;)
+/*输出:
+    2---[&quot;happy&quot;, &quot;every&quot;, &quot;minute&quot;]
+    2---(
+    happy,
+    every,
+    second
+    )
+*/
+</code></pre>
+<h6 id="Array和NSArray之间相互转换"><a href="#Array和NSArray之间相互转换" class="headerlink" title="Array和NSArray之间相互转换"></a>Array和NSArray之间相互转换</h6><p>Swift在数组方面Array很好的兼容了OC中的NSArray,可以直接进行赋值转换.</p>
+<p><em>(1) 可以直接声明Array或者NSArray, 并进行遍历</em></p>
+<pre><code class="swift">let swiftArray: Array&lt;String&gt; = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+for element in swiftArray{  
+    print(element)  
+} 
+
+let OCNSArray: NSArray = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+for element in OCNSArray{  
+   print(element)  
+}
+</code></pre>
+<p><em>(2)可以声明一个NSArray数组，转化为Array数组，再进行遍历</em></p>
+<pre><code class="swift">let OCNSArray: NSArray = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+let swiftArray:[String] = OCNSArray as! [String]  
+
+for index in swiftArray{  
+    print(index)  
+}
+</code></pre>
+<p><em>(3)可以声明一个Array数组，转化为NSArray，再进行遍历</em></p>
+<pre><code class="swift">let swiftArray: Array&lt;String&gt; = [&quot;10&quot;, &quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;]  
+let OCNSArray:NSArray = swiftArray  
+for index in OCNSArray{  
+    print(index)  
+}
+</code></pre>
 
   </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <div class="random-toc">
+    <h2>目录</h2>
+    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#概念"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Array和NSArray之间相互转换"><span class="toc-text">Array和NSArray之间相互转换</span></a></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+    <a href="/2016/10/30/iOSReverse/Runtime/" class="prev">&larr; 上一篇 Objective-C源码学习</a>
+  
+
+  
+
+  
+    <a href="/2016/10/30/Swift/Swift中的值类型和引用类型(let和var使用注意)/" class="next">下一篇 Swift中的值类型和引用类型(let和var使用注意) &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
 
       
       
@@ -702,6 +397,8 @@ var unsplashConfig = {"gravity":"north"};
 var turnoffBackgroundImage = false;
 
 
+
+  turnoffBackgroundImage = true;
 
 
 var backgroundColor = "E5E5E5";
