@@ -1,0 +1,301 @@
+<style>/*
+ * Visual Studio 2015 dark style
+ * Author: Nicolas LLOBERA <nllobera@gmail.com>
+ */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #1E1E1E;
+  color: #DCDCDC;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-symbol,
+.hljs-name {
+  color: #569CD6;
+}
+.hljs-link {
+  color: #569CD6;
+  text-decoration: underline;
+}
+
+.hljs-built_in,
+.hljs-type {
+  color: #4EC9B0;
+}
+
+.hljs-number,
+.hljs-class {
+  color: #B8D7A3;
+}
+
+.hljs-string,
+.hljs-meta-string {
+  color: #D69D85;
+}
+
+.hljs-regexp,
+.hljs-template-tag {
+  color: #9A5334;
+}
+
+.hljs-subst,
+.hljs-function,
+.hljs-title,
+.hljs-params,
+.hljs-formula {
+  color: #DCDCDC;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #57A64A;
+  font-style: italic;
+}
+
+.hljs-doctag {
+  color: #608B4E;
+}
+
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-tag {
+  color: #9B9B9B;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #BD63C5;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-builtin-name {
+  color: #9CDCFE;
+}
+
+.hljs-section {
+  color: gold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/*.hljs-code {
+  font-family:'Monospace';
+}*/
+
+.hljs-bullet,
+.hljs-selector-tag,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #D7BA7D;
+}
+
+.hljs-addition {
+  background-color: #144212;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-deletion {
+  background-color: #600;
+  display: inline-block;
+  width: 100%;
+}
+</style>
+<p>[TOC]</p>
+<h1>系统级别</h1>
+<h2>进程、线程、协程</h2>
+<h3>进程</h3>
+<p>进程是系统进行资源分配和调度的一个独立单元，有独立的内存空间。</p>
+<h3>线程</h3>
+<p>CPU、操作系统、编程语言的线程的的概念很容易混淆。</p>
+<p>对于CPU来说，超线程就是物理线程，一个4核8线程的CPU，他代表的是可以有8个并行内核线程数同时运行。</p>
+<p>而对于操作系统抽象出来的线程就是内核线程，内核线程由进程创建，有操作系统统一调度，丢给8个CPU物理线程去执行。</p>
+<p>而对于编程语言来说分三种情况：</p>
+<ol>
+<li>如Java直接包装一下系统线程，那么Java中的线程就等于是系统中的线程。</li>
+<li>完全在用户空间实现的线程，也就是编程语言自己封装的一套调度。这样的话操作系统对这些线程是不知道的，很早的一些语言会这样做，有操作系统不支持线程的情况。</li>
+<li>如Dart有自己的一套封装，同时也利用了系统多线程优势。</li>
+</ol>
+<h3>协程</h3>
+<p>协程叫做<code>coroutine</code>，是一种比线程更小的单元。可以理解为进程&gt;线程&gt;协程。</p>
+<p>但是线程和协程执行方式完全不同。</p>
+<p>线程中执行子程序(函数)的调用顺序是明确的，一层一层，一个接一个的调用。</p>
+<p>但是在协程中在子程序内可以中断，然后转而执行别的子程序，之后再返回来执行，跟CPU的中断十分相似。</p>
+<p>Dart中async和await的实现。</p>
+<p>协程分为<code>无线协程</code>和<code>有线协程</code>，无线协程在离开当前调用位置时，会将当前变量放在堆区，当再次回到当前位置时，还会继续从堆区中获取到变量。所以，一般在执行当前函数时就会将变量直接分配到堆区，而<code>async</code>、<code>await</code>就属于无线协程的一种。有线协程则会将变量继续保存在栈区，在回到指针指向的离开位置时，会继续从栈中取出调用。</p>
+<h2><a href="https://laike9m.com/blog/huan-zai-yi-huo-bing-fa-he-bing-xing,61/">并发和并行</a></h2>
+<blockquote>
+<p>“并发”指的是程序的结构，“并行”指的是程序运行时的状态</p>
+</blockquote>
+<p>并行(parallelism)就是像CPU多个线程同时执行任务。</p>
+<p>并发(concurrency)就如协程，使多个操作可以在重叠的时间段内进行，可以当做成一个设计标准。</p>
+<blockquote>
+<p>任何属于冯诺依曼结构的计算机，其中的CPU（或者说核）必然是串行执行指令的。所以在任何单CPU机器上，是不存在严格意义上，或者说狭义上的并行的－－在指令级别的严格意义上的并行，是指在一个足够小的时刻，可以允许大于一条的指令在执行。</p>
+</blockquote>
+<h1>Dart虚拟机</h1>
+<p>思考问题：</p>
+<ol>
+<li>dart vm是怎样执行同步代码和异步代码的？</li>
+<li>Isolate和系统线程是什么关系？</li>
+<li>如果执行dart代码的时候只启动了一个root Isolate，那么是怎么保证同步和异步代码执行顺序？</li>
+<li>Flutter Runner和isolate之间的关系</li>
+</ol>
+<h2>Flutter系统概览图</h2>
+<p><img src="https://zzaning-assets.oss-cn-hangzhou.aliyuncs.com/2020/05/screenshot20200418at95401am.png" alt="Screen_Shot_2020-04-18_at_9.54.01_A"></p>
+<ol>
+<li><code>Framework(dart)</code>:可以理解为UI框架</li>
+<li><code>Engine(C/C++)</code>:引擎层，可以理解为用于驱动<code>Framework</code>例如:<code>Skia</code>、<code>DartVM</code>、<code>Shell</code></li>
+<li><code>Embedder(Platform Specific)</code>:嵌入层， 为<code>Engine</code>提供四个<code>Task Runner</code>，渲染设置、原生插件、打包、线程管理，事件循环交互操作为</li>
+</ol>
+<p>Flutter Runner存在于Embedder层，而Root Isolate存在Engine的Dart VM。
+Runner和Isolate是相互独立的，但是在Flutter里面Isolate要依赖于Runner，因为Isolate里面的任务是要丢给系统线程执行的，而系统线程的提供就交给Embedder层了。
+不同平台Framework和Engine是一样的，区别在于Embedder。</p>
+<h2>Flutter Runner</h2>
+<p>Runner的创建策略：</p>
+<p>iOS、Android平台每启动一个<code>Flutter Engine</code>时为UI，GPU，IO Runner各自创建一个线程，但是共享Platform Runner线程(每启动一个<code>FlutterViewController</code>就会创建一个<code>Engine</code>)。</p>
+<p>Fushia每启动一个<code>Engine</code>为UI，GPU，IO，Platform各自创建一个线程。</p>
+<h3>Platform Task Runner</h3>
+<p>是Android和iOS平台应用的主线程</p>
+<p>负责 <code>Flutter Embedder</code>和 iOS、Android 进程之间的通信。App 进程所有的消息都是通过 <code>Platform Task Runner</code> 来接受处理，根据职责单一设计模式，很自然的 <code>Platform Task Runner</code> 就拥有调度整个 Flutter 执行流程的责任。所有与 iOS、Android 平台之间的交互都需要在该 <code>Task</code> 中进行。</p>
+<p>阻塞Platform Thread不会直接导致Flutter应用的卡顿（跟iOS android主线程不同，因为Dart是自己的渲染引擎，自己生成GPU渲染资源，并不在iOS主线程中进行这些操作）。尽管如此，长时间卡住Platform Thread应用有可能会被系统Watchdog强杀。</p>
+<h3>UI Task Runner</h3>
+<p>是Android和iOS平台应用的子线程</p>
+<p>用于执行<code>Dart Root Isolate</code>代码。负责渲染相关的操作，负责Timer，Microtask，异步IO等操作。</p>
+<p>Flutter中渲染机制：</p>
+<ol>
+<li>Root Isolate 通知 Flutter Engine 有帧需要渲染，Flutter Engine 通过 Platform Runner 通知 iOS、Android 平台需要在下一个 vsync 的时候得到通知。</li>
+<li>iOS、Android 平台等待下一个 vsync 信号。</li>
+<li>当 vsync 信号发送过来时，UI Task 把 Widgets Tree 进行 Layout 计算并生成一个 Layer Tree，把这个 Layer Tree 提交给 GPU Task。这个阶段没有进行任何光栅化，仅是生成了对需要绘制内容的描述，Layer Tree 包含了用于屏幕上显示 Widgets 的各种信息，用于配置和渲染。</li>
+<li>GPU Task 渲染完成后通过 Platform Task 通知 iOS、Android 平台进行后续渲染操作，完成后会刷新数据到硬件显存中去，然后在下一个 vsync 信号发出后，硬件会从显存中读取上一帧的计算结果然后同步到显示器上。</li>
+</ol>
+<p>这个线程的过载会直接导致卡顿掉帧。</p>
+<h3>GPU Task Runner</h3>
+<p>是Android和iOS平台应用的子线程</p>
+<p>用于执行<code>GPU</code>指令，UI Task Runner创建的Layer Tree是跨平台的，它不关心到底由谁来完成绘制。<code>GPU Task</code>负责将Layer Tree提供的信息转换为平台可执行的<code>GPU</code>指令，负责绘制<code>GPU</code>资源的管理，包括<code>Framebuffer</code>，<code>Surface</code>、<code>Texture</code>、<code>Buffers</code></p>
+<p><code>GPU Runner</code> 会根据目前帧执行的进度去向 <code>UI Runner</code> 要求下一帧的数据，在任务繁重的时候可能会告诉<code>UI Runner</code> 延迟任务，这种调度机制确保 <code>GPU Runner</code> 不至于过载，同时也避免了 <code>UI Runner</code> 不必要的消耗</p>
+<p>这个线程的过载会直接导致卡顿掉帧。</p>
+<h3>IO Task Runner</h3>
+<p>是Android和iOS平台应用的子线程</p>
+<p>处理图片数据，为<code>GPU</code>渲染做准备，比如读取磁盘压缩图片的格式，将解压成<code>GPU</code>能处理的格式，并传给<code>GPU</code>，因其比较消耗性能所以单独开一个线程。</p>
+<p><img src="https://zzaning-assets.oss-cn-hangzhou.aliyuncs.com/2020/05/v28d696d1bd6d45dbac91e7a47d35216f4720w.jpg" alt="v2-8d696d1bd6d45dbac91e7a47d35216f4_720"></p>
+<h2>异步模型</h2>
+<p><img src="https://zzaning-assets.oss-cn-hangzhou.aliyuncs.com/2020/05/screen-shot-20200526-at-92135-pm.png" alt="Screen Shot 2020-05-26 at 9.21.35 P"></p>
+<p>多线程虽然好用，但是在大量并发时，仍然存在两个较大的缺陷，一个是开辟线程比较耗费资源，线程开多了机器吃不消，另一个则是线程的锁问题，多个线程操作共享内存时需要加锁，复杂情况下的锁竞争不仅会<strong>降低性能</strong>，还可能<strong>造成死锁</strong>。</p>
+<p>因此又出现了基于事件的异步模型。简单说就是在某个单线程中存在一个事件循环和一个事件队列，事件循环不断的从事件队列中取出事件来执行，这里的事件就好比是一段代码，每当遇到耗时的事件时，事件循环不会停下来等待结果，它会跳过耗时事件，继续执行其后的事件。当不耗时的事件都完成了，再来查看耗时事件的结果。因此，耗时事件不会阻塞整个事件循环，这让它后面的事件也会有机会得到执行。</p>
+<p>这种基于事件的异步模型，只适合I/O密集型的耗时操作，因为I/O耗时操作，往往是把时间浪费在等待对方传送数据或者返回结果，因此这种异步模型往往用于网络服务器并发。如果是计算密集型的操作，则应当尽可能利用处理器的多核，实现并行计算。</p>
+<p>关于在采用基于时间的异步模型中，如dart。
+延时任务并不是准确的就能理解了，因为万一前面有很耗时的任务，那么你的延迟任务不一定能准时运行。</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span>  <span class="hljs-string">'dart:async'</span>;
+<span class="hljs-keyword">import</span>  <span class="hljs-string">'dart:io'</span>;
+
+<span class="hljs-keyword">void</span>  main() {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"main start"</span>);
+
+    <span class="hljs-keyword">new</span> Future.delayed(<span class="hljs-keyword">new</span>  <span class="hljs-built_in">Duration</span>(seconds:<span class="hljs-number">1</span>),(){
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">'task delayed'</span>);
+    });
+
+    <span class="hljs-keyword">new</span> Future((){
+        <span class="hljs-comment">// 模拟耗时5秒</span>
+        sleep(<span class="hljs-built_in">Duration</span>(seconds:<span class="hljs-number">5</span>));
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"5s task"</span>);
+    });
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"main stop"</span>);
+}
+
+<span class="hljs-comment">// 运行结果</span>
+main start
+main stop
+<span class="hljs-number">5</span>s task
+task delayed
+</code></pre>
+<h2>Dart异步编程</h2>
+<h3>Isolate</h3>
+<p><code>isolate</code>是<code>Dart</code>平台对线程的实现方案，但和普通<code>Thread</code>不同的是，<code>isolate</code>拥有独立的内存，<code>isolate</code>由线程和独立内存构成。正是由于<code>isolate</code>线程之间的内存不共享，所以<code>isolate</code>线程之间并不存在资源抢夺的问题，所以也不需要锁。</p>
+<p>这意味着你不能访问主线程中的变量，或者使用 <code>setState()</code> 来更新 UI。</p>
+<p>通过<code>isolate</code>可以很好的利用多核CPU，来进行大量耗时任务的处理。<code>isolate</code>线程之间的通信主要通过<code>port</code>来进行，这个<code>port</code>消息传递的过程是异步的。通过<code>Dart</code>源码也可以看出，实例化一个<code>isolate</code>的过程包括，实例化<code>isolate</code>结构体、在堆中分配线程内存、配置<code>port</code>等过程。</p>
+<p><code>isolate</code>的整体模型其实更像进程，而<code>async</code>、<code>await</code>更像是线程。</p>
+<pre class="hljs"><code><span class="hljs-comment">/// <span class="markdown">使用</span></span>
+Isolate isolate;
+
+<span class="hljs-comment">// 启动新的Isolate，并监听消息</span>
+start() <span class="hljs-keyword">async</span> {
+  ReceivePort receivePort = ReceivePort();
+  isolate = <span class="hljs-keyword">await</span> Isolate.spawn(entryPoint, receivePort.sendPort, debugName: <span class="hljs-string">'newIsolate'</span>);
+
+  receivePort.listen((message) {
+    debugPrint(<span class="hljs-string">'<span class="hljs-subst">${Isolate.current.debugName}</span>: receive msg <span class="hljs-subst">$message</span>'</span>);
+  });
+  debugPrint(<span class="hljs-string">'<span class="hljs-subst">${Isolate.current.debugName}</span>: spawn'</span>);
+}
+
+<span class="hljs-comment">// 新Isolate入口函数</span>
+entryPoint(SendPort sendPort) {
+  <span class="hljs-built_in">int</span> counter = <span class="hljs-number">0</span>;
+  Timer.periodic(<span class="hljs-built_in">Duration</span>(seconds: <span class="hljs-number">1</span>), (Timer t) {
+    debugPrint(<span class="hljs-string">'<span class="hljs-subst">${Isolate.current.debugName}</span>: send msg <span class="hljs-subst">${counter++}</span>'</span>);
+    sendPort.send(<span class="hljs-built_in">DateTime</span>.now());
+  });
+}
+
+<span class="hljs-comment">// 结束Isolate</span>
+<span class="hljs-keyword">void</span> stop() {
+  <span class="hljs-keyword">if</span> (isolate != <span class="hljs-keyword">null</span>) {
+    isolate.kill(priority: Isolate.immediate);
+    isolate = <span class="hljs-keyword">null</span>;
+    debugPrint(<span class="hljs-string">'<span class="hljs-subst">${Isolate.current.debugName}</span>: killed isolate'</span>);
+  }
+}
+
+<span class="hljs-comment">///<span class="markdown">在Flutter中，Framework为我们封装了一套API来简化Isolate的使用。</span></span>
+Future&lt;<span class="hljs-built_in">List</span>&lt;Photo&gt;&gt; fetchPhotos(http.Client client) <span class="hljs-keyword">async</span> {
+  <span class="hljs-keyword">final</span> response =
+      <span class="hljs-keyword">await</span> client.<span class="hljs-keyword">get</span>(<span class="hljs-string">'https://jsonplaceholder.typicode.com/photos'</span>);
+  <span class="hljs-keyword">return</span> compute(parsePhotos, response.body);
+}
+
+<span class="hljs-built_in">List</span>&lt;Photo&gt; parsePhotos(<span class="hljs-built_in">String</span> responseBody) {
+  <span class="hljs-keyword">final</span> parsed = json.decode(responseBody);
+  <span class="hljs-keyword">return</span> parsed.map&lt;Photo&gt;((json) =&gt; Photo.fromJson(json)).toList();
+}
+</code></pre>
+<h3>单线程模型</h3>
+<p>说Dart是单线程，是因为Dart程序运行是会创建一个主<code>Isolate</code>，除非你再创建一个另外<code>Isolate</code>，否则你的代码将会永远运行在主UI线程上。</p>
+<p><code>**Isolate</code>中有两个队列：**</p>
+<p><img src="https://zzaning-assets.oss-cn-hangzhou.aliyuncs.com/2020/05/46.png" alt="46"></p>
+<h3>MicroTask Queue</h3>
+<p>这是一个高权限消息队列，主要处理来自 Dart 的事件。</p>
+<pre class="hljs"><code><span class="hljs-comment">// 通过这两种方式添加任务</span>
+Future.microtask(computation);
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">'dart:async'</span>;
+<span class="hljs-keyword">async</span>.scheduleMicrotask(() {
+  <span class="hljs-comment">// ...code goes here...</span>
+});
+</code></pre>
+<h3>Event Queue</h3>
+<p>这是一个标准消息队列，处理包含所有的外部事件，I/O、用户交互事件、绘制事件、timers、两个isolates之间的消息等等。</p>
+<p>异步任务，丢到Event Queue后也只是顺序执行的。</p>
+<p>使用<code>Future</code>类，可以将任务加入到Event Queue的队尾。</p>
+<p>异步任务通过<code>await</code>和<code>async</code>关键字，借助于Event Loop实现非租塞同步等。</p>
+<h3>任务安排注意事项</h3>
+<ul>
+<li>尽可能的使用 event queue（即，使用 <code>Future</code> 和 <code>Future.delayed()</code>）。</li>
+<li>使用 Future 的 then() 和 whenComplete() 来处理任务顺序。</li>
+<li>为了避免 event loop 阻塞，尽量避免使用 microtask queue。</li>
+<li>为了使得 app 尽可能快的响应，应该在另外的 isolate 或者 worker 中运行计算密集型任务，避免在 queue 中运行计算密集型任务。</li>
+</ul>

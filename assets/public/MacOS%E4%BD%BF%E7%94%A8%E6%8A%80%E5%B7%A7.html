@@ -1,0 +1,188 @@
+<style>/**
+ * Obsidian style
+ * ported by Alexander Marenin (http://github.com/ioncreature)
+ */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #282b2e;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-selector-id {
+  color: #93c763;
+}
+
+.hljs-number {
+  color: #ffcd22;
+}
+
+.hljs {
+  color: #e0e2e4;
+}
+
+.hljs-attribute {
+  color: #668bb0;
+}
+
+.hljs-code,
+.hljs-class .hljs-title,
+.hljs-section {
+  color: white;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #d39745;
+}
+
+.hljs-meta {
+  color: #557182;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-bullet,
+.hljs-subst,
+.hljs-emphasis,
+.hljs-type,
+.hljs-built_in,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #8cbbad;
+}
+
+.hljs-string,
+.hljs-symbol {
+  color: #ec7600;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+  color: #818e96;
+}
+
+.hljs-selector-class {
+  color: #A082BD
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-title,
+.hljs-section,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+  font-weight: bold;
+}
+</style>
+<p>[TOC]</p>
+<h4>光标快速移动</h4>
+<ol>
+<li>
+<p>全文 &amp; 段落定位
+「Command + 方向键上」将光标快速移动到整篇文本开头
+「Command + 方向键下」快速移动到文章结尾
+「Option + 方向键上」将光标移动到当前段落的开头
+「Option + 方向键下」移动到当前段落的末尾</p>
+</li>
+<li>
+<p>句子 &amp; 单词定位
+「Command + 方向键左」，将光标移动到句子的开头
+「Command + 方向键右」，则是移动到句子的末尾
+「Option + 方向键左」，将光标移动到前一个单词
+「Option + 方向键右」，将光标移动到单词</p>
+</li>
+<li>
+<p>快速选中文本
+除了快速移动光标之外，配合「Shift」键，我们还可以快速得选中我们想要的文本。
+用鼠标点任意一个位置（即时你什么都看不见），按住shift，点另外一个位置，就自动选中这之间的内容了。对于触摸板不方便点选／需要滚屏才能跨选完成的情况很实用。</p>
+</li>
+</ol>
+<h4>批量修改文件编码</h4>
+<pre class="hljs"><code><span class="hljs-comment"># 查看文件编码</span>
+file ip.txt
+<span class="hljs-comment"># ip.txt: UTF-8 Unicode text, with escape sequences</span>
+</code></pre>
+<p><em>文件编码格式转换</em></p>
+<ol>
+<li>在Vim中直接进行转换文件编码,比如将一个文件转换成utf-8格式</li>
+</ol>
+<pre class="hljs"><code>:<span class="hljs-built_in">set</span> fileencoding=utf-8
+</code></pre>
+<ol start="2">
+<li>iconv 转换，iconv的命令格式如下：</li>
+</ol>
+<pre class="hljs"><code>iconv -f encoding -t encoding inputfile
+
+<span class="hljs-comment"># iconv -f UTF-16 -t UTF-8 file1 -o file2</span>
+
+enconv -L zh_CN -x UTF-8 tab-0-0.md tab-0-2.md tab-2-0.md tab-2-1.md tab-4-0.md tab-6-0.md
+
+<span class="hljs-comment"># 批量</span>
+
+find *.md -<span class="hljs-built_in">exec</span> sh -c <span class="hljs-string">"iconv -f UTF-16 -t UTF-8 {} &gt; new/{}"</span> \;  
+</code></pre>
+<ol start="3">
+<li>enconv 转换文件编码，比如要将一个GBK编码的文件转换成UTF-8编码</li>
+</ol>
+<pre class="hljs"><code>enconv -L zh_CN -x UTF-8 filename
+</code></pre>
+<ol start="4">
+<li>使用python</li>
+</ol>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">import</span> codecs
+<span class="hljs-keyword">import</span> chardet
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encodeFiles</span>(<span class="hljs-params">dirPath</span>):</span>
+	fileList = os.listdir(dirPath)
+	print(fileList)
+	<span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> fileList:
+		print(file)
+		<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.isdir(file) <span class="hljs-keyword">and</span> file.split(<span class="hljs-string">'.'</span>)[<span class="hljs-number">-1</span>] == <span class="hljs-string">'md'</span>:
+
+			<span class="hljs-keyword">with</span> open(file, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:
+				data = f.read()
+				codeType = chardet.detect(data)[<span class="hljs-string">'encoding'</span>]
+				convert(file, codeType, <span class="hljs-string">'UTF-8'</span>)
+
+			<span class="hljs-comment"># with open(file, 'rb') as f:</span>
+			<span class="hljs-comment"># 	with open ('../new/'+file, 'w', encoding="utf-8") as fNew:</span>
+			<span class="hljs-comment"># 		data = f.read()</span>
+			<span class="hljs-comment"># 		codeType = chardet.detect(data)['encoding']</span>
+			<span class="hljs-comment"># 		fNew.write(data)</span>
+			<span class="hljs-comment"># 		f.close()</span>
+			<span class="hljs-comment"># 		fNew.close()</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">convert</span>(<span class="hljs-params">file, in_enc=<span class="hljs-string">"GBK"</span>, out_enc=<span class="hljs-string">"UTF-8"</span></span>):</span>
+    <span class="hljs-string">"""
+    该程序用于将目录下的文件从指定格式转换到指定格式，默认的是GBK转到utf-8
+    :param file:    文件路径
+    :param in_enc:  输入文件格式
+    :param out_enc: 输出文件格式
+    :return:
+    """</span>
+    in_enc  = in_enc.upper()
+    out_enc = out_enc.upper()
+    <span class="hljs-keyword">try</span>:
+        print(<span class="hljs-string">"convert [ "</span> + file.split(<span class="hljs-string">'\\'</span>)[<span class="hljs-number">-1</span>] + <span class="hljs-string">" ].....From "</span> + in_enc + <span class="hljs-string">" --&gt; "</span> + out_enc )
+        f = codecs.open(file, <span class="hljs-string">'r'</span>, in_enc)
+        new_content = f.read()
+        codecs.open(file, <span class="hljs-string">'w'</span>, out_enc).write(new_content)
+    <span class="hljs-comment"># print (f.read())</span>
+    <span class="hljs-keyword">except</span> IOError <span class="hljs-keyword">as</span> err:
+        print(<span class="hljs-string">"I/O error: {0}"</span>.format(err))
+</code></pre>
