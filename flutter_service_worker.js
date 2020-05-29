@@ -4,7 +4,7 @@ const RESOURCES = {
   "favicon.ico": "f3a7edfb4ae829180a54697ed795ca0d",
 "index.html": "c37bda9144c75f224b40a0dcb944823c",
 "/": "c37bda9144c75f224b40a0dcb944823c",
-"main.dart.js": "ef392edac20925458b4ab5d1c94e10c0",
+"main.dart.js": "124e01c89ab6b008839c2fd4e38a903b",
 "icons/apple-touch-icon-120x120.png": "5b0adeb0adc831b2741a38e26a5a8edb",
 "icons/android-touch-icon.png": "f92716bcd4f8db3df6dc11351264eee1",
 "icons/apple-touch-icon-152x152.png": "6c397351d8600e2db895ec7d2f4d088c",
